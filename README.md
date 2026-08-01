@@ -66,7 +66,7 @@ según el modelo.
 ### 2. Descarga y compila el proyecto
 
 ```bash
-git clone <url-del-repositorio>
+git clone git@github.com:JSNavas/grasp.git
 cd grasp
 npm install
 npm run build
