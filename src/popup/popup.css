@@ -1,0 +1,180 @@
+body {
+  margin: 0;
+  width: 320px;
+  padding: 16px;
+  background: #16181d;
+  color: #e8eaed;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 13px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+header img {
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.sub {
+  margin: 1px 0 0;
+  color: #9aa1ab;
+  font-size: 11px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #b9bec7;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #2c3038;
+  background: #1e2128;
+  color: #e8eaed;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #B4325A;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.row input[type='checkbox'] {
+  width: auto;
+  margin: 0;
+}
+
+.row label {
+  margin: 0;
+  font-weight: 400;
+}
+
+button {
+  width: 100%;
+  padding: 9px;
+  border: none;
+  border-radius: 8px;
+  background: #B4325A;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #C93E68;
+}
+
+button.ghost {
+  margin-top: 8px;
+  background: transparent;
+  color: #9aa1ab;
+  border: 1px solid #2c3038;
+}
+
+.usage {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #1e2128;
+}
+
+.usage li + li {
+  margin-top: 9px;
+}
+
+.usage .line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.usage .name {
+  color: #9aa1ab;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.usage .count {
+  color: #e8eaed;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.usage .current .name,
+.usage .current .count {
+  color: #D9587D;
+  font-weight: 600;
+}
+
+.usage .bar {
+  height: 4px;
+  margin-top: 4px;
+  border-radius: 2px;
+  background: #2c3038;
+  overflow: hidden;
+}
+
+.usage .bar i {
+  display: block;
+  height: 100%;
+  background: #B4325A;
+  border-radius: 2px;
+}
+
+.usage .unknown {
+  margin-top: 3px;
+  font-size: 10px;
+  color: #5c636e;
+}
+
+.saved {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: #8fe3b0;
+}
+
+.hint {
+  margin: 14px 0 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6f7681;
+}
+
+a {
+  color: #D9587D;
+}

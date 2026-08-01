@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 14 100 100" width="128" height="128">
+  <defs>
+    <linearGradient id="wine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#D14A6E"/><stop offset="1" stop-color="#A02547"/>
+    </linearGradient>
+    <linearGradient id="gray" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#C6CDD6"/><stop offset="1" stop-color="#7E8794"/>
+    </linearGradient>
+    <!-- La cuna se dibuja mas larga de la cuenta y se recorta contra el disco,
+         asi su borde derecho coincide exactamente con la silueta del anillo. -->
+    <clipPath id="disc">
+      <circle cx="64.0" cy="64.0" r="44.0"/>
+    </clipPath>
+  </defs>
+  <path d="M 89.24,27.96 A 44.0 44.0 0 1 0 104.80,80.48 L 87.64,73.55 A 25.5 25.5 0 1 1 78.63,43.11 Z" fill="url(#wine)"/>
+  <g clip-path="url(#disc)">
+    <path d="M 82.0,48.0 L 122.0,48.0 L 122.0,76.0 L 57.0,76.0 Z" fill="url(#gray)"/>
+  </g>
+</svg>
