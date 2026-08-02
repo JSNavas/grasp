@@ -115,6 +115,27 @@ modelo.
 El contador es diario y por modelo; los topes no caducan. Sólo cuenta lo que sale
 a la red: lo servido desde caché no suma.
 
+## La oración se reconstruye desde el bloque, no desde el nodo
+
+**El problema.** El HTML parte las frases en varios nodos de texto en cuanto hay
+un `<b>`, un `<a>` o un `<em>` por medio. Extraer la oración del nodo bajo el
+cursor significaba que al pasar el ratón sobre «por bloques **semánticos**» sólo
+llegaban esas tres palabras al modelo, sin el resto de la frase. Y el contexto es
+justamente lo que permite resolver los bloques.
+
+**La solución.** `caret.ts` sube desde el nodo hasta el primer ancestro que no sea
+inline (`display` distinto de `inline`, `contents` o `ruby`), recorre sus nodos de
+texto con un `TreeWalker` y concatena el contenido guardando el desplazamiento de
+cada pieza. Sobre ese texto completo se segmenta la oración, y los índices
+resultantes se mapean de vuelta a nodos para construir un `Range` real.
+
+Ese `Range` sirve además para anclar el tooltip a la oración entera en lugar de al
+fragmento, que era otra fuente de desalineación visual.
+
+Las etiquetas de código en línea (`code`, `kbd`, `samp`) sí entran en el texto
+—forman parte de la frase en cualquier documentación técnica— pero no disparan la
+consulta si el cursor está encima de ellas.
+
 ## Filtrado antes de la red
 
 Si no hay texto útil bajo el cursor no se muestra nada ni se consulta a la API.

@@ -57,8 +57,9 @@ la tecla de disparo tiene efecto sin recargar nada.
 ## Flujo de una traducción
 
 1. El usuario para el cursor sobre una frase y mantiene la tecla de disparo.
-2. `caret.ts` localiza el nodo de texto y **`Intl.Segmenter` extrae la oración
-   completa** que lo contiene.
+2. `caret.ts` localiza el nodo de texto, sube al **bloque contenedor**,
+   reconstruye su contenido completo y **`Intl.Segmenter` extrae la oración**
+   que rodea al cursor.
 3. El content script envía esa oración al service worker.
 4. El worker mira la caché. Si acierta, responde en microsegundos sin gastar cuota.
 5. Si falla, la cola comprueba el límite por minuto y llama a Gemini pidiendo un
