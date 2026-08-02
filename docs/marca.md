@@ -12,6 +12,16 @@ cuenta y un `clipPath` circular la corta, de modo que su borde derecho coincide
 exactamente con la silueta del anillo. Ajustarla a ojo dejaba un saliente que
 hacía que la cuña pareciera una bandera pegada al círculo.
 
+**El cierre inferior del hueco se deriva, no se fija a ojo.** `GAP_B` se calcula
+con `asin((WB - C) / R_OUT)`: el ángulo exacto en el que el arco exterior alcanza
+la altura del borde inferior de la cuña. Con el valor fijo anterior el anillo
+reaparecía unos 4px más abajo de donde termina la cuña, y por ese resquicio se
+veía el fondo. Se le resta un `BLEED` de 2° para que el anillo entre ligeramente
+por debajo de la cuña y el antialiasing no deje una costura clara en la unión.
+
+El corte superior (`GAP_A`) sí es un valor elegido: es el que forma la diagonal
+que hace legible la **G**, y no debe cerrarse.
+
 **Sin sombra proyectada.** La referencia original tenía un efecto de papel
 plegado. A 16px no se lee como profundidad sino como suciedad, así que se eliminó.
 

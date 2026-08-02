@@ -4,7 +4,11 @@ C = 64.0
 R_OUT = 44.0
 R_IN  = 25.5
 GAP_A = -55.0
-GAP_B = 22.0
+
+WT, WB = 48.0, 76.0
+WR, WL = 122.0, 57.0
+WBEV = 82.0
+BLEED = 2.0
 
 WINE_HI, WINE_LO = "#B4325A", "#78182F"
 GRAY_HI, GRAY_LO = "#DDE2E8", "#9AA3AF"
@@ -17,18 +21,17 @@ def pt(deg, r):
 def f(p):
     return f"{p[0]:.2f},{p[1]:.2f}"
 
+GAP_B = math.degrees(math.asin((WB - C) / R_OUT)) - BLEED
+
 o_a, o_b = pt(GAP_A, R_OUT), pt(GAP_B, R_OUT)
 i_a, i_b = pt(GAP_A, R_IN),  pt(GAP_B, R_IN)
 ring = (
     f"M {f(o_a)} "
-    f"A {R_OUT} {R_OUT} 0 1 0 {f(o_b)} "   # large-arc, sentido antihorario
+    f"A {R_OUT} {R_OUT} 0 1 0 {f(o_b)} "
     f"L {f(i_b)} "
     f"A {R_IN} {R_IN} 0 1 1 {f(i_a)} Z"
 )
 
-WT, WB = 48.0, 76.0
-WR, WL = 122.0, 57.0
-WBEV = 82.0
 wedge = f"M {WBEV},{WT} L {WR},{WT} L {WR},{WB} L {WL},{WB} Z"
 
 DEFS = f"""  <defs>
