@@ -136,6 +136,20 @@ Las etiquetas de código en línea (`code`, `kbd`, `samp`) sí entran en el text
 —forman parte de la frase en cualquier documentación técnica— pero no disparan la
 consulta si el cursor está encima de ellas.
 
+## Ámbito: párrafo, frase o selección
+
+Por defecto se traduce el **párrafo completo**: es la unidad con la que se lee de
+verdad, y traducir frase a frase obliga a repetir el gesto varias veces sobre el
+mismo texto sin ganar nada. El ajuste `scope` permite volver a la frase suelta
+para gastar menos cuota en páginas densas.
+
+Si hay texto **seleccionado**, la selección manda sobre cualquier detección
+automática. Es el escape para los casos que la heurística no acierta: un fragmento
+que cruza varios bloques, o media frase concreta.
+
+El tope de `isTranslatable` subió a 1200 caracteres para dar cabida a párrafos
+largos, y el tooltip pasa a tener `max-height` con scroll propio.
+
 ## Filtrado antes de la red
 
 Si no hay texto útil bajo el cursor no se muestra nada ni se consulta a la API.

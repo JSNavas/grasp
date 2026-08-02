@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { analyze } from '@/lib/messages'
-import { DEFAULTS, getSettings, type TriggerKey } from '@/lib/settings'
+import { DEFAULTS, getSettings, type Scope, type TriggerKey } from '@/lib/settings'
 import { isTranslatable } from '@/lib/text'
-import { targetAt, type HoverTarget } from './caret'
+import { selectionTarget, targetAt, type HoverTarget } from './caret'
 import { Tooltip, type TooltipState } from './Tooltip'
 
 export function App() {
@@ -13,6 +13,7 @@ export function App() {
   const enabled = useRef(DEFAULTS.enabled)
   const delayMs = useRef(DEFAULTS.hoverDelayMs)
   const trigger = useRef<TriggerKey>(DEFAULTS.triggerKey)
+  const scope = useRef<Scope>(DEFAULTS.scope)
 
   const requestId = useRef(0)
 
@@ -21,11 +22,13 @@ export function App() {
       enabled.current = s.enabled
       delayMs.current = s.hoverDelayMs
       trigger.current = s.triggerKey
+      scope.current = s.scope
     })
     const onChanged = (changes: Record<string, chrome.storage.StorageChange>) => {
       if (changes.enabled) enabled.current = changes.enabled.newValue as boolean
       if (changes.hoverDelayMs) delayMs.current = changes.hoverDelayMs.newValue as number
       if (changes.triggerKey) trigger.current = changes.triggerKey.newValue as TriggerKey
+      if (changes.scope) scope.current = changes.scope.newValue as Scope
     }
     chrome.storage.onChanged.addListener(onChanged)
     return () => chrome.storage.onChanged.removeListener(onChanged)
@@ -66,7 +69,7 @@ export function App() {
     }
 
     const lookup = (x: number, y: number) => {
-      const hit = targetAt(x, y)
+      const hit = selectionTarget() ?? targetAt(x, y, scope.current)
 
       if (!hit || !isTranslatable(hit.sentence)) {
         if (lastSentence !== null) dismiss()

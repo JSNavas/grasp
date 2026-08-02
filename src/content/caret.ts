@@ -1,3 +1,4 @@
+import type { Scope } from '@/lib/settings'
 import { normalize, sentenceSpanAt } from '@/lib/text'
 
 export interface HoverTarget {
@@ -91,16 +92,29 @@ function locate(pieces: Piece[], offset: number): { node: Text; offset: number }
 function rectFor(range: Range, y: number): DOMRect | null {
   const rects = range.getClientRects()
   let rect = range.getBoundingClientRect()
-  for (const candidate of rects) {
-    if (y >= candidate.top && y <= candidate.bottom) {
-      rect = candidate
-      break
+  if (Number.isFinite(y)) {
+    for (const candidate of rects) {
+      if (y >= candidate.top && y <= candidate.bottom) {
+        rect = candidate
+        break
+      }
     }
   }
   return rect.width === 0 && rect.height === 0 ? null : rect
 }
 
-export function targetAt(x: number, y: number): HoverTarget | null {
+export function selectionTarget(): HoverTarget | null {
+  const selection = window.getSelection()
+  if (!selection || selection.isCollapsed || selection.rangeCount === 0) return null
+
+  const sentence = normalize(selection.toString())
+  if (!sentence) return null
+
+  const rect = rectFor(selection.getRangeAt(0), Number.NaN)
+  return rect ? { sentence, rect } : null
+}
+
+export function targetAt(x: number, y: number, scope: Scope = 'sentence'): HoverTarget | null {
   const hit = caretAt(x, y)
   if (!hit) return null
 
@@ -116,7 +130,9 @@ export function targetAt(x: number, y: number): HoverTarget | null {
 
   const { text, pieces, targetStart } = collected
   const cursor = Math.min(targetStart + hit.offset, Math.max(0, text.length - 1))
-  const span = sentenceSpanAt(text, cursor)
+
+  const span =
+    scope === 'paragraph' ? trimmedSpan(text) : sentenceSpanAt(text, cursor)
   if (!span) return null
 
   const sentence = normalize(text.slice(span.start, span.end))
@@ -133,4 +149,12 @@ export function targetAt(x: number, y: number): HoverTarget | null {
   range.detach()
 
   return rect ? { sentence, rect } : null
+}
+
+function trimmedSpan(text: string) {
+  let start = 0
+  let end = text.length
+  while (start < end && /\s/.test(text[start])) start++
+  while (end > start && /\s/.test(text[end - 1])) end--
+  return end > start ? { start, end } : null
 }

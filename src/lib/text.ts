@@ -52,7 +52,7 @@ export function sentenceAt(text: string, offset: number): string | null {
 }
 
 export function isTranslatable(text: string): boolean {
-  if (text.length < 2 || text.length > 600) return false
+  if (text.length < 2 || text.length > 1200) return false
 
   return /\p{L}{2}/u.test(text)
 }

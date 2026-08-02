@@ -101,7 +101,8 @@ pulsado Shift**.
 
 | Acción | Cómo |
 |---|---|
-| Traducir una frase | Cursor encima + mantener **Shift** |
+| Traducir un párrafo | Cursor encima + mantener **Shift** |
+| Traducir un fragmento concreto | Selecciónalo y mantén **Shift** |
 | Cerrar la traducción | **Esc**, o mover el cursor fuera |
 | Activar/desactivar Grasp | **Alt+G** |
 
@@ -118,6 +119,7 @@ Todo se ajusta desde el popup:
 | Ajuste | Para qué sirve |
 |---|---|
 | **Modelo** | Los `flash-lite` tienen más cuota diaria; `flash` traduce algo mejor |
+| **Cuánto traducir** | El párrafo completo (por defecto) o sólo la frase bajo el cursor |
 | **Traducir al hacer hover** | Cambia Shift por Alt o Ctrl, o desactiva el modificador |
 | **Peticiones por minuto** | Tope de seguridad para no saturar la API |
 | **Retardo del hover** | Cuánto debe estar quieto el cursor antes de consultar |

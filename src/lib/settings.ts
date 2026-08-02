@@ -1,11 +1,14 @@
 export type TriggerKey = 'none' | 'shift' | 'alt' | 'ctrl'
 
+export type Scope = 'sentence' | 'paragraph'
+
 export interface Settings {
   apiKey: string
   model: string
   rpm: number
   hoverDelayMs: number
   triggerKey: TriggerKey
+  scope: Scope
   enabled: boolean
 }
 
@@ -15,6 +18,7 @@ export const DEFAULTS: Settings = {
   rpm: 10,
   hoverDelayMs: 450,
   triggerKey: 'shift',
+  scope: 'paragraph',
   enabled: true,
 }
 

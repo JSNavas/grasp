@@ -8,6 +8,7 @@ import {
   setSettings,
   today,
   type Settings,
+  type Scope,
   type TriggerKey,
   type Usage,
 } from '@/lib/settings'
@@ -18,6 +19,11 @@ const MODELS: Array<[value: string, label: string]> = [
   ['gemini-3.1-flash-lite', 'flash-lite 3.1 — mas cuota'],
   ['gemini-flash-lite-latest', 'flash-lite latest — mas cuota'],
   ['gemini-3.5-flash', 'flash 3.5 — mejor calidad, menos cuota'],
+]
+
+const SCOPES: Array<[value: Scope, label: string]> = [
+  ['paragraph', 'El parrafo completo'],
+  ['sentence', 'Solo la frase bajo el cursor'],
 ]
 
 const TRIGGERS: Array<[value: TriggerKey, label: string]> = [
@@ -85,6 +91,19 @@ function Popup() {
         onChange={(e) => update('triggerKey', e.target.value as TriggerKey)}
       >
         {TRIGGERS.map(([value, label]) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
+      </select>
+
+      <label htmlFor="scope">Cuanto traducir</label>
+      <select
+        id="scope"
+        value={settings.scope}
+        onChange={(e) => update('scope', e.target.value as Scope)}
+      >
+        {SCOPES.map(([value, label]) => (
           <option key={value} value={value}>
             {label}
           </option>
