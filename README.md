@@ -137,6 +137,9 @@ gratuita se agota en minutos.
 **El popup dice «CRXJS DEV MODE».** El servidor de desarrollo está corriendo y ha
 sobrescrito el build. Párealo y ejecuta `npm run build` otra vez.
 
+**Cambié un ajuste y no se aplica.** Recarga con **F5** las pestañas que ya
+tuvieras abiertas; los ajustes se leen al inyectarse el script.
+
 **Dejó de traducir de repente.** Si acabas de recargar la extensión, pulsa **F5**
 en la pestaña: los content scripts ya inyectados quedan desconectados y necesitan
 recargarse.

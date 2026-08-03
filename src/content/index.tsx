@@ -11,7 +11,8 @@ function mount() {
   const host = document.createElement('div')
   host.id = HOST_ID
 
-  host.style.cssText = 'position:fixed;top:0;left:0;width:0;height:0;pointer-events:none;'
+  host.style.cssText =
+    'position:fixed;top:0;left:0;width:0;height:0;pointer-events:none;z-index:2147483647;'
   document.documentElement.appendChild(host)
 
   const shadow = host.attachShadow({ mode: 'closed' })

@@ -53,7 +53,7 @@ function Popup() {
   const save = async () => {
     await setSettings(settings)
     setSaved(true)
-    setTimeout(() => setSaved(false), 1800)
+    setTimeout(() => setSaved(false), 6000)
   }
 
   return (
@@ -169,7 +169,11 @@ function Popup() {
       </ul>
 
       <button onClick={save}>Guardar</button>
-      {saved && <p className="saved">Guardado</p>}
+      {saved && (
+        <p className="saved">
+          Guardado. Recarga las pestanas abiertas (F5) para aplicar los cambios.
+        </p>
+      )}
 
       <p className="hint">
         La key se guarda solo en este navegador (<code>chrome.storage.local</code>) y nunca sale de

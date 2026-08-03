@@ -8,6 +8,8 @@
 
 .tooltip {
   position: fixed;
+  inset: auto;
+  margin: 0;
   z-index: 2147483647;
   max-width: min(760px, 94vw);
   max-height: 70vh;

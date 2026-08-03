@@ -150,6 +150,36 @@ que cruza varios bloques, o media frase concreta.
 El tope de `isTranslatable` subió a 1200 caracteres para dar cabida a párrafos
 largos, y el tooltip pasa a tener `max-height` con scroll propio.
 
+## El tooltip vive en el top layer
+
+**El problema.** El recuadro quedaba tapado por el contenido de la página. La
+causa era `:host { all: initial }` en el CSS del Shadow DOM: `all` resetea *todas*
+las propiedades del host, incluido su `z-index`, que quedaba en `auto`. El
+`z-index: 2147483647` del recuadro vive dentro del shadow y pierde en cuanto la
+página crea sus propios contextos de apilamiento.
+
+**La solución.** Subir más el z-index no es una solución: siempre habrá una web
+que suba más. El recuadro se declara `popover="manual"` y se muestra con
+`showPopover()`, lo que lo coloca en el **top layer** del navegador, que se pinta
+por encima de todo el documento con independencia del apilamiento.
+
+Hay que neutralizar los estilos que el navegador aplica por defecto a `[popover]`
+(`inset: 0` y `margin: auto`, que lo centrarían) para que el posicionamiento
+propio siga funcionando. Si `showPopover()` falla se retira el atributo, porque un
+`[popover]` que no está abierto es `display: none` y dejaría el tooltip invisible.
+El host conserva además su `z-index` en línea como respaldo.
+
+## Los ajustes no se propagan a pestañas ya abiertas
+
+El content script escucha `chrome.storage.onChanged`, así que en condiciones
+normales un cambio de tecla o de ámbito se aplica en caliente. Pero si la pestaña
+quedó huérfana de una recarga previa de la extensión, ese listener ya no existe y
+el ajuste parece no tener efecto.
+
+Como no hay forma fiable de distinguir ambos casos desde el popup, el mensaje de
+guardado indica siempre que hay que recargar las pestañas abiertas. Es preferible
+un aviso redundante a que el usuario crea que la extensión está rota.
+
 ## Filtrado antes de la red
 
 Si no hay texto útil bajo el cursor no se muestra nada ni se consulta a la API.

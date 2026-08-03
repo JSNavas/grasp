@@ -18,6 +18,18 @@ export function Tooltip({ anchor, state, boxRef }: Props) {
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null)
 
   useLayoutEffect(() => {
+    const el = ref.current as (HTMLDivElement & { showPopover?: () => void }) | null
+    if (!el?.showPopover) return
+    if (el.isConnected && !el.matches(':popover-open')) {
+      try {
+        el.showPopover()
+      } catch {
+        el.removeAttribute('popover')
+      }
+    }
+  }, [state])
+
+  useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
     const box = el.getBoundingClientRect()
@@ -37,6 +49,7 @@ export function Tooltip({ anchor, state, boxRef }: Props) {
     <div
       ref={ref}
       className="tooltip"
+      popover="manual"
       style={{
         left: pos?.left ?? anchor.left,
         top: pos?.top ?? anchor.bottom + GAP,
