@@ -66,19 +66,25 @@ modificador sólo en el evento de ratón hacía que no ocurriera nada.
 conocida del cursor. Las dos formas funcionan: tecla pulsada mientras se mueve, o
 cursor parado y luego tecla.
 
-## El tooltip captura el ratón
+## El tooltip captura el ratón y persiste
 
 Con `pointer-events: none` los eventos lo atraviesan: al mover el cursor hacia la
 traducción, el navegador lo situaba sobre el texto de la página y relanzaba la
-consulta en bucle.
+consulta en bucle. Ahora el recuadro captura el ratón, y `App.tsx` define una zona
+muerta con 12px de margen para que el trayecto desde el texto no lo cierre a mitad
+de camino.
 
-Ahora el recuadro captura el ratón y `App.tsx` define una zona muerta con 12px de
-margen: mientras el cursor esté dentro, no se cierra ni se traduce nada de su
-interior. El margen cubre el hueco entre el texto y el recuadro para que el
-trayecto no lo cierre a mitad de camino.
+El recuadro **no se cierra solo**. Un panel que desaparece en cuanto apartas el
+ratón no sirve para estudiar: obliga a mantener el pulso mientras lees una
+cuadrícula que puede tener veinte bloques. Se cierra sólo de tres formas
+explícitas: el botón `×`, un clic fuera, o `Esc`.
 
-Contrapartida asumida: mientras está abierto, tapa lo que haya debajo. Es
-inevitable si se quiere poder posar el cursor encima. `Esc` lo cierra.
+Como consecuencia, ni el scroll ni soltar la tecla ni perder el foco de la ventana
+lo descartan, y pasar el cursor sobre algo no traducible tampoco: simplemente no
+ocurre nada y lo que ya estaba sigue en pantalla.
+
+Contrapartida asumida: mientras está abierto tapa lo que haya debajo. Es inevitable
+si se quiere poder posar el cursor encima para leer o copiar.
 
 ## Elección de modelo y cuotas
 

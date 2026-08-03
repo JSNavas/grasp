@@ -16,6 +16,7 @@ export function App() {
   const scope = useRef<Scope>(DEFAULTS.scope)
 
   const requestId = useRef(0)
+  const closeRef = useRef<(() => void) | null>(null)
 
   useEffect(() => {
     getSettings().then((s) => {
@@ -71,10 +72,7 @@ export function App() {
     const lookup = (x: number, y: number) => {
       const hit = selectionTarget() ?? targetAt(x, y, scope.current)
 
-      if (!hit || !isTranslatable(hit.sentence)) {
-        if (lastSentence !== null) dismiss()
-        return
-      }
+      if (!hit || !isTranslatable(hit.sentence)) return
 
       if (hit.sentence === lastSentence) return
 
@@ -105,18 +103,15 @@ export function App() {
       }
 
       window.clearTimeout(timer)
-
-      if (!armed(e)) {
-        if (lastSentence !== null) dismiss()
-        return
-      }
+      if (!armed(e)) return
 
       timer = window.setTimeout(() => lookup(e.clientX, e.clientY), delayMs.current)
     }
 
-    const onScroll = () => {
-      if (!insideBox(lastX, lastY)) dismiss()
+    const onPointerDown = (e: MouseEvent) => {
+      if (!insideBox(e.clientX, e.clientY)) dismiss()
     }
+
     const TRIGGER_KEYS: Record<Exclude<TriggerKey, 'none'>, string[]> = {
       shift: ['Shift'],
       alt: ['Alt'],
@@ -139,19 +134,27 @@ export function App() {
     }
 
     document.addEventListener('mousemove', onMove, { passive: true })
-    document.addEventListener('scroll', onScroll, { passive: true, capture: true })
+    document.addEventListener('mousedown', onPointerDown, true)
     document.addEventListener('keydown', onKeyDown)
-    window.addEventListener('blur', dismiss)
+
+    closeRef.current = dismiss
 
     return () => {
       window.clearTimeout(timer)
       document.removeEventListener('mousemove', onMove)
-      document.removeEventListener('scroll', onScroll, true)
+      document.removeEventListener('mousedown', onPointerDown, true)
       document.removeEventListener('keydown', onKeyDown)
-      window.removeEventListener('blur', dismiss)
+      closeRef.current = null
     }
   }, [])
 
   if (!target) return null
-  return <Tooltip anchor={target.rect} state={state} boxRef={boxRef} />
+  return (
+    <Tooltip
+      anchor={target.rect}
+      state={state}
+      boxRef={boxRef}
+      onClose={() => closeRef.current?.()}
+    />
+  )
 }

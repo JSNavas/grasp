@@ -103,14 +103,15 @@ pulsado Shift**.
 |---|---|
 | Traducir un párrafo | Cursor encima + mantener **Shift** |
 | Traducir un fragmento concreto | Selecciónalo y mantén **Shift** |
-| Cerrar la traducción | **Esc**, o mover el cursor fuera |
+| Cerrar la traducción | El botón **×**, un clic fuera, o **Esc** |
 | Activar/desactivar Grasp | **Alt+G** |
 
 Las dos formas de invocarlo funcionan: puedes mantener Shift mientras mueves el
 ratón, o parar el cursor sobre la palabra y pulsar Shift después.
 
-Mientras el cursor esté sobre el recuadro de la traducción, éste no se cierra y no
-se traduce nada de su interior, así puedes leerlo con calma o copiar el texto.
+El recuadro se queda abierto hasta que lo cierras, así puedes leerlo con calma,
+copiar el texto o desplazarte por la página sin perderlo. Mientras el cursor esté
+encima no se traduce nada de su interior.
 
 ## Configuración
 

@@ -9,11 +9,12 @@ interface Props {
   anchor: DOMRect
   state: TooltipState
   boxRef: RefObject<HTMLDivElement | null>
+  onClose: () => void
 }
 
 const GAP = 10
 
-export function Tooltip({ anchor, state, boxRef }: Props) {
+export function Tooltip({ anchor, state, boxRef, onClose }: Props) {
   const ref = boxRef
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null)
 
@@ -56,6 +57,10 @@ export function Tooltip({ anchor, state, boxRef }: Props) {
         visibility: pos ? 'visible' : 'hidden',
       }}
     >
+      <button className="close" onClick={onClose} title="Cerrar (Esc)" aria-label="Cerrar">
+        &#10005;
+      </button>
+
       {state.status === 'loading' && (
         <div className="skeleton">
           <span />
